@@ -1,3 +1,9 @@
+const path = require("path")
+
+require("dotenv").config({
+  path: `.env`,
+})
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Starter Blog`,
@@ -14,38 +20,14 @@ module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     {
-      resolve: `gatsby-source-filesystem`,
+      resolve: "gatsby-source-microcms",
       options: {
-        path: `${__dirname}/content/blog`,
-        name: `blog`,
-      },
-    },
-    {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `images`,
-        path: `${__dirname}/src/images`,
-      },
-    },
-    {
-      resolve: `gatsby-transformer-remark`,
-      options: {
-        plugins: [
+        apiKey: process.env.API_KEY,
+        serviceId: "kuni-gourmet",
+        apis: [
           {
-            resolve: `gatsby-remark-images`,
-            options: {
-              maxWidth: 630,
-            },
+            endpoint: "blog-posts",
           },
-          {
-            resolve: `gatsby-remark-responsive-iframe`,
-            options: {
-              wrapperStyle: `margin-bottom: 1.0725rem`,
-            },
-          },
-          `gatsby-remark-prismjs`,
-          `gatsby-remark-copy-linked-files`,
-          `gatsby-remark-smartypants`,
         ],
       },
     },
@@ -74,32 +56,32 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMarkdownRemark } }) => {
-              return allMarkdownRemark.nodes.map(node => {
-                return Object.assign({}, node.frontmatter, {
-                  description: node.excerpt,
-                  date: node.frontmatter.date,
-                  url: site.siteMetadata.siteUrl + node.fields.slug,
-                  guid: site.siteMetadata.siteUrl + node.fields.slug,
-                  custom_elements: [{ "content:encoded": node.html }],
-                })
+            serialize: ({ query: { site, allMicrocmsBlogPosts } }) => {
+              return allMicrocmsBlogPosts.nodes.map(node => {
+                return Object.assign(
+                  {},
+                  {
+                    description: node.description,
+                    title: node.title,
+                    date: node.publishedAt,
+                    url: site.siteMetadata.siteUrl + node.slug,
+                    guid: site.siteMetadata.siteUrl + node.slug,
+                    custom_elements: [{ "content:encoded": node.body }],
+                  }
+                )
               })
             },
             query: `
               {
-                allMarkdownRemark(
-                  sort: { order: DESC, fields: [frontmatter___date] },
+                allMicrocmsBlogPosts(
+                  sort: { order: DESC, fields: [publishedAt] },
                 ) {
                   nodes {
-                    excerpt
-                    html
-                    fields {
-                      slug
-                    }
-                    frontmatter {
-                      title
-                      date
-                    }
+                    description
+                    body
+                    slug
+                    title
+                    publishedAt
                   }
                 }
               }
