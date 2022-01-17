@@ -1,12 +1,15 @@
-import * as React from "react"
-import { Link, graphql } from "gatsby"
+import * as React from 'react'
+import { PageProps, Link, graphql } from 'gatsby'
 
 // import Bio from "../components/bio"
-import Layout from "../components/layout"
-import Seo from "../components/seo"
+import Layout from '../components/layout'
+import Seo from '../components/seo'
 
-const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
+const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
+  data,
+  location,
+}) => {
+  const siteTitle = data.site?.siteMetadata?.title || `Title`
   const posts = data.allMicrocmsBlogPosts.nodes
 
   if (posts.length === 0) {
@@ -15,9 +18,9 @@ const BlogIndex = ({ data, location }) => {
         <Seo title="All posts" />
         {/* <Bio /> */}
         <p>
-          No blog posts found. Add markdown posts to "content/blog" (or the
-          directory you specified for the "gatsby-source-filesystem" plugin in
-          gatsby-config.js).
+          {
+            'No blog posts found. Add markdown posts to "content/blog" (or the directory you specified for the "gatsby-source-filesystem" plugin in gatsby-config.js).'
+          }
         </p>
       </Layout>
     )
@@ -36,11 +39,10 @@ const BlogIndex = ({ data, location }) => {
               <article
                 className="post-list-item"
                 itemScope
-                itemType="http://schema.org/Article"
-              >
+                itemType="http://schema.org/Article">
                 <header>
                   <h2>
-                    <Link to={post.slug} itemProp="url">
+                    <Link to={post.slug || '/'} itemProp="url">
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
@@ -49,7 +51,7 @@ const BlogIndex = ({ data, location }) => {
                 <section>
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: post.description || "",
+                      __html: post.description || '',
                     }}
                     itemProp="description"
                   />
@@ -66,7 +68,7 @@ const BlogIndex = ({ data, location }) => {
 export default BlogIndex
 
 export const pageQuery = graphql`
-  query {
+  query BlogIndex {
     site {
       siteMetadata {
         title
