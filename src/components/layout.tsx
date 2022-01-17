@@ -1,6 +1,8 @@
 import * as React from 'react'
 import { WindowLocation } from '@reach/router'
-import { Link } from 'gatsby'
+import Container from '@mui/material/Container'
+
+import Header from './header'
 
 type Props = {
   location: WindowLocation
@@ -8,27 +10,14 @@ type Props = {
   children: React.ReactElement[]
 }
 const Layout: React.FC<Props> = ({ location, title, children }) => {
-  const isRootPath = location.pathname === '/'
-  let header
-
-  if (isRootPath) {
-    header = (
-      <h1 className="main-heading">
-        <Link to="/">{title}</Link>
-      </h1>
-    )
-  } else {
-    header = (
-      <Link className="header-link-home" to="/">
-        {title}
-      </Link>
-    )
-  }
-
   return (
-    <div className="global-wrapper" data-is-root-path={isRootPath}>
-      <header className="global-header">{header}</header>
-      <main>{children}</main>
+    <div>
+      <header className="global-header">
+        <Header />
+      </header>
+      <Container>
+        <main>{children}</main>
+      </Container>
       <footer>
         © {new Date().getFullYear()}, Built with
         {` `}
