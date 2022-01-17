@@ -1,12 +1,17 @@
 import * as React from "react"
-import { Link, graphql } from "gatsby"
+import { PageProps, Link, graphql } from "gatsby"
 
 // import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
-const BlogIndex = ({ data, location }) => {
-  const siteTitle = data.site.siteMetadata?.title || `Title`
+type DataProps = {
+  site: {
+    buildTime: string
+  }
+}
+const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({ data, location }) => {
+  const siteTitle = data.site?.siteMetadata?.title || `Title`
   const posts = data.allMicrocmsBlogPosts.nodes
 
   if (posts.length === 0) {
@@ -40,7 +45,7 @@ const BlogIndex = ({ data, location }) => {
               >
                 <header>
                   <h2>
-                    <Link to={post.slug} itemProp="url">
+                    <Link to={post.slug || "/"} itemProp="url">
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
@@ -66,7 +71,7 @@ const BlogIndex = ({ data, location }) => {
 export default BlogIndex
 
 export const pageQuery = graphql`
-  query {
+  query BlogIndex {
     site {
       siteMetadata {
         title
