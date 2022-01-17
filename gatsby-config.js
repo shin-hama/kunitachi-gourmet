@@ -1,6 +1,6 @@
-const path = require("path")
+const path = require('path')
 
-require("dotenv").config({
+require('dotenv').config({
   path: `.env`,
 })
 
@@ -20,13 +20,13 @@ module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     {
-      resolve: "gatsby-source-microcms",
+      resolve: 'gatsby-source-microcms',
       options: {
         apiKey: process.env.API_KEY,
-        serviceId: "kuni-gourmet",
+        serviceId: 'kuni-gourmet',
         apis: [
           {
-            endpoint: "blog-posts",
+            endpoint: 'blog-posts',
           },
         ],
       },
@@ -66,7 +66,7 @@ module.exports = {
                     date: node.publishedAt,
                     url: site.siteMetadata.siteUrl + node.slug,
                     guid: site.siteMetadata.siteUrl + node.slug,
-                    custom_elements: [{ "content:encoded": node.body }],
+                    custom_elements: [{ 'content:encoded': node.body }],
                   }
                 )
               })
@@ -86,8 +86,8 @@ module.exports = {
                 }
               }
             `,
-            output: "/rss.xml",
-            title: "Gatsby Starter Blog RSS Feed",
+            output: '/rss.xml',
+            title: 'Gatsby Starter Blog RSS Feed',
           },
         ],
       },
@@ -110,7 +110,7 @@ module.exports = {
       resolve: `gatsby-plugin-typegen`,
       options: {
         emitSchema: {
-          "src/__generated__/gatsby-introspection.json": true,
+          'src/__generated__/gatsby-introspection.json': true,
         },
       },
     },
