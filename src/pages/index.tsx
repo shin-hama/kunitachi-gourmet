@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { PageProps, graphql } from 'gatsby'
+import Stack from '@mui/material/Stack'
 
 import ArticleCard from '../components/articleCard'
 // import Bio from "../components/bio"
@@ -31,30 +32,21 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
     <Layout location={location} title={siteTitle}>
       <Seo title="All posts" />
       {/* <Bio /> */}
-      <ol style={{ listStyle: `none` }}>
+      <Stack spacing={1}>
         {posts.map(post => {
           const title = post.title || post.slug || 'No Title'
           console.log(post.id)
-
           return (
-            <li key={post.slug}>
-              <article
-                className="post-list-item"
-                itemScope
-                itemType="http://schema.org/Article">
-                <header>
-                  <ArticleCard
-                    title={title}
-                    slug={post.slug || ''}
-                    publishedAt={post.publishedAt || ''}
-                    image={post.heroImage?.gatsbyImageData}
-                  />
-                </header>
-              </article>
-            </li>
+            <ArticleCard
+              key={post.slug}
+              title={title}
+              slug={post.slug || ''}
+              publishedAt={post.publishedAt || ''}
+              image={post.heroImage?.gatsbyImageData}
+            />
           )
         })}
-      </ol>
+      </Stack>
     </Layout>
   )
 }
@@ -77,7 +69,7 @@ export const pageQuery = graphql`
         description {
           description
         }
-        publishedAt(formatString: "MMMM DD, YYYY")
+        publishedAt(formatString: "YYYY-MM-DD")
         heroImage {
           gatsbyImageData
         }
