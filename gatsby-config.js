@@ -135,7 +135,7 @@ module.exports = {
         defaultImgixParams: { auto: 'format,compress' },
         fields: [
           {
-            nodeType: 'MicrocmsStaticImagesImage',
+            nodeType: 'MicrocmsBlogPostsHeroImage',
             fieldName: 'imgixImage',
             getURL: node =>
               node.url.replace('https://images.microcms-assets.io/', ''),
