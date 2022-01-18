@@ -4,6 +4,38 @@ require('dotenv').config({
   path: `.env`,
 })
 
+const contentfulConfig = {
+  spaceId: process.env.CONTENTFUL_SPACE_ID,
+  accessToken:
+    process.env.CONTENTFUL_ACCESS_TOKEN ||
+    process.env.CONTENTFUL_DELIVERY_TOKEN,
+}
+
+// If you want to use the preview API please define
+// CONTENTFUL_HOST and CONTENTFUL_PREVIEW_ACCESS_TOKEN in your
+// environment config.
+//
+// CONTENTFUL_HOST should map to `preview.contentful.com`
+// CONTENTFUL_PREVIEW_ACCESS_TOKEN should map to your
+// Content Preview API token
+//
+// For more information around the Preview API check out the documentation at
+// https://www.contentful.com/developers/docs/references/content-preview-api/#/reference/spaces/space/get-a-space/console/js
+//
+// To change back to the normal CDA, remove the CONTENTFUL_HOST variable from your environment.
+if (process.env.CONTENTFUL_HOST) {
+  contentfulConfig.host = process.env.CONTENTFUL_HOST
+  contentfulConfig.accessToken = process.env.CONTENTFUL_PREVIEW_ACCESS_TOKEN
+}
+
+const { spaceId, accessToken } = contentfulConfig
+
+if (!spaceId || !accessToken) {
+  throw new Error(
+    'Contentful spaceId and the access token need to be provided.'
+  )
+}
+
 module.exports = {
   siteMetadata: {
     title: `Gatsby Starter Blog`,
@@ -51,8 +83,8 @@ module.exports = {
         `,
         feeds: [
           {
-            serialize: ({ query: { site, allMicrocmsBlogPosts } }) => {
-              return allMicrocmsBlogPosts.nodes.map(node => {
+            serialize: ({ query: { site, allContentfulPost } }) => {
+              return allContentfulPost.nodes.map(node => {
                 return Object.assign(
                   {},
                   {
@@ -61,19 +93,19 @@ module.exports = {
                     date: node.publishedAt,
                     url: site.siteMetadata.siteUrl + node.slug,
                     guid: site.siteMetadata.siteUrl + node.slug,
-                    custom_elements: [{ 'content:encoded': node.body }],
                   }
                 )
               })
             },
             query: `
               {
-                allMicrocmsBlogPosts(
+                allContentfulPost(
                   sort: { order: DESC, fields: [publishedAt] },
                 ) {
                   nodes {
-                    description
-                    body
+                    description {
+                      description
+                    }
                     slug
                     title
                     publishedAt
@@ -114,34 +146,8 @@ module.exports = {
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
     {
-      resolve: 'gatsby-source-microcms',
-      options: {
-        apiKey: process.env.API_KEY,
-        serviceId: 'kuni-gourmet',
-        apis: [
-          {
-            endpoint: 'blog-posts',
-          },
-          {
-            endpoint: 'static-images',
-          },
-        ],
-      },
-    },
-    {
-      resolve: `@imgix/gatsby`,
-      options: {
-        domain: 'images.microcms-assets.io',
-        defaultImgixParams: { auto: 'format,compress' },
-        fields: [
-          {
-            nodeType: 'MicrocmsStaticImagesImage',
-            fieldName: 'imgixImage',
-            getURL: node =>
-              node.url.replace('https://images.microcms-assets.io/', ''),
-          },
-        ],
-      },
+      resolve: 'gatsby-source-contentful',
+      options: contentfulConfig,
     },
   ],
 }

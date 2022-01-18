@@ -10,7 +10,6 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
-    "@imgix/gatsby": "^1.7.5",
     "@mui/material": "^5.2.8",
     "gatsby": "^4.5.2",
     "gatsby-plugin-feed": "^4.5.0",
@@ -27,8 +26,8 @@
     "gatsby-remark-prismjs": "^6.5.0",
     "gatsby-remark-responsive-iframe": "^5.5.0",
     "gatsby-remark-smartypants": "^5.5.0",
+    "gatsby-source-contentful": "^7.3.2",
     "gatsby-source-filesystem": "^4.5.1",
-    "gatsby-source-microcms": "^2.0.0",
     "gatsby-transformer-remark": "^5.5.1",
     "gatsby-transformer-sharp": "^4.5.0",
     "prismjs": "^1.25.0",

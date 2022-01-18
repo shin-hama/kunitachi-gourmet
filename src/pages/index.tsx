@@ -1,6 +1,7 @@
 import * as React from 'react'
-import { PageProps, Link, graphql } from 'gatsby'
+import { PageProps, graphql } from 'gatsby'
 
+import ArticleCard from '../components/articleCard'
 // import Bio from "../components/bio"
 import Layout from '../components/layout'
 import Seo from '../components/seo'
@@ -10,7 +11,7 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
   location,
 }) => {
   const siteTitle = data.site?.siteMetadata?.title || `Title`
-  const posts = data.allMicrocmsBlogPosts.nodes
+  const posts = data.allContentfulPost.nodes
 
   if (posts.length === 0) {
     return (
@@ -32,7 +33,8 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
       {/* <Bio /> */}
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
-          const title = post.title || post.slug
+          const title = post.title || post.slug || 'No Title'
+          console.log(post.id)
 
           return (
             <li key={post.slug}>
@@ -41,21 +43,13 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
                 itemScope
                 itemType="http://schema.org/Article">
                 <header>
-                  <h2>
-                    <Link to={post.slug || '/'} itemProp="url">
-                      <span itemProp="headline">{title}</span>
-                    </Link>
-                  </h2>
-                  <small>{post.publishedAt}</small>
-                </header>
-                <section>
-                  <p
-                    dangerouslySetInnerHTML={{
-                      __html: post.description || '',
-                    }}
-                    itemProp="description"
+                  <ArticleCard
+                    title={title}
+                    slug={post.slug || ''}
+                    publishedAt={post.publishedAt || ''}
+                    image={post.heroImage?.gatsbyImageData}
                   />
-                </section>
+                </header>
               </article>
             </li>
           )
@@ -74,12 +68,19 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMicrocmsBlogPosts(sort: { fields: [publishedAt], order: DESC }) {
+    allContentfulPost {
       nodes {
-        description
+        id
         slug
-        publishedAt(formatString: "MMMM DD, YYYY")
         title
+        tags
+        description {
+          description
+        }
+        publishedAt(formatString: "MMMM DD, YYYY")
+        heroImage {
+          gatsbyImageData
+        }
       }
     }
   }

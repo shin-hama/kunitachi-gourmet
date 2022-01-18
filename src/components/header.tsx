@@ -1,13 +1,9 @@
 import * as React from 'react'
-import { Link } from 'gatsby'
 import { StaticImage } from 'gatsby-plugin-image'
-import { styled } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 
-const UndecoratedLink = styled(Link)({
-  textDecoration: 'none',
-})
+import UndecoratedLink from './atoms/UndecoratedLink'
 
 const Header = () => {
   return (
