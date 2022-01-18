@@ -1,6 +1,5 @@
 import * as React from 'react'
-import { PageProps, Link, graphql } from 'gatsby'
-import { getImage } from 'gatsby-plugin-image'
+import { PageProps, graphql } from 'gatsby'
 
 import ArticleCard from '../components/articleCard'
 // import Bio from "../components/bio"
@@ -12,7 +11,7 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
   location,
 }) => {
   const siteTitle = data.site?.siteMetadata?.title || `Title`
-  const posts = data.allMicrocmsBlogPosts.nodes
+  const posts = data.allContentfulPost.nodes
 
   if (posts.length === 0) {
     return (
@@ -35,6 +34,7 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.title || post.slug || 'No Title'
+          console.log(post.id)
 
           return (
             <li key={post.slug}>
@@ -47,7 +47,7 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
                     title={title}
                     slug={post.slug || ''}
                     publishedAt={post.publishedAt || ''}
-                    image={post.heroImage?.imgixImage?.gatsbyImageData}
+                    image={post.heroImage?.gatsbyImageData}
                   />
                 </header>
               </article>
@@ -68,17 +68,18 @@ export const pageQuery = graphql`
         title
       }
     }
-    allMicrocmsBlogPosts(sort: { fields: [publishedAt], order: DESC }) {
+    allContentfulPost {
       nodes {
         id
-        description
         slug
-        publishedAt(formatString: "MMMM DD, YYYY")
         title
+        tags
+        description {
+          description
+        }
+        publishedAt(formatString: "MMMM DD, YYYY")
         heroImage {
-          imgixImage {
-            gatsbyImageData
-          }
+          gatsbyImageData
         }
       }
     }

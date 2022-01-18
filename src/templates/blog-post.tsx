@@ -8,17 +8,21 @@ import Seo from '../components/seo'
 const BlogPostTemplate: React.FC<
   PageProps<GatsbyTypes.BlogPostBySlugQuery>
 > = ({ data, location }) => {
-  const post = data.microcmsBlogPosts
+  const post = data.contentfulPost
   const siteTitle = data.site?.siteMetadata?.title || `Title`
   const { previous, next } = data
 
   if (post === undefined) {
     return <></>
   }
+  console.log(post)
 
   return (
     <Layout location={location} title={siteTitle}>
-      <Seo title={post.title || ''} description={post.description || ''} />
+      <Seo
+        title={post.title || ''}
+        description={post.description?.description || ''}
+      />
       <article
         className="blog-post"
         itemScope
@@ -76,18 +80,22 @@ export const pageQuery = graphql`
         title
       }
     }
-    microcmsBlogPosts(id: { eq: $id }) {
+    contentfulPost(id: { eq: $id }) {
       id
-      body
+      body {
+        raw
+      }
       title
       publishedAt(formatString: "MMMM DD, YYYY")
-      description
+      description {
+        description
+      }
     }
-    previous: microcmsBlogPosts(id: { eq: $previousPostId }) {
+    previous: contentfulPost(id: { eq: $previousPostId }) {
       slug
       title
     }
-    next: microcmsBlogPosts(id: { eq: $nextPostId }) {
+    next: contentfulPost(id: { eq: $nextPostId }) {
       slug
       title
     }
