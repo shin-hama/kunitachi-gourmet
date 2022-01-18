@@ -93,9 +93,6 @@ module.exports = {
                     date: node.publishedAt,
                     url: site.siteMetadata.siteUrl + node.slug,
                     guid: site.siteMetadata.siteUrl + node.slug,
-                    custom_elements: [
-                      { 'content:encoded': node.body.childMarkdownRemark.html },
-                    ],
                   }
                 )
               })
@@ -108,11 +105,6 @@ module.exports = {
                   nodes {
                     description {
                       description
-                    }
-                    body {
-                      childMarkdownRemark {
-                        html
-                      }
                     }
                     slug
                     title
