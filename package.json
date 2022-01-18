@@ -10,6 +10,7 @@
   "dependencies": {
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
+    "@imgix/gatsby": "^1.7.5",
     "@mui/material": "^5.2.8",
     "gatsby": "^4.5.2",
     "gatsby-plugin-feed": "^4.5.0",
