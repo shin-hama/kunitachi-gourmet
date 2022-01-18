@@ -20,15 +20,10 @@ module.exports = {
   plugins: [
     `gatsby-plugin-image`,
     {
-      resolve: 'gatsby-source-microcms',
+      resolve: `gatsby-source-filesystem`,
       options: {
-        apiKey: process.env.API_KEY,
-        serviceId: 'kuni-gourmet',
-        apis: [
-          {
-            endpoint: 'blog-posts',
-          },
-        ],
+        name: `images`,
+        path: `${__dirname}/src/images`,
       },
     },
     `gatsby-transformer-sharp`,
@@ -118,5 +113,35 @@ module.exports = {
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
+    {
+      resolve: 'gatsby-source-microcms',
+      options: {
+        apiKey: process.env.API_KEY,
+        serviceId: 'kuni-gourmet',
+        apis: [
+          {
+            endpoint: 'blog-posts',
+          },
+          {
+            endpoint: 'static-images',
+          },
+        ],
+      },
+    },
+    {
+      resolve: `@imgix/gatsby`,
+      options: {
+        domain: 'images.microcms-assets.io',
+        defaultImgixParams: { auto: 'format,compress' },
+        fields: [
+          {
+            nodeType: 'MicrocmsStaticImagesImage',
+            fieldName: 'imgixImage',
+            getURL: node =>
+              node.url.replace('https://images.microcms-assets.io/', ''),
+          },
+        ],
+      },
+    },
   ],
 }
