@@ -38,7 +38,7 @@ const Header = () => {
               backgroundColor: 'rgba(0,0,0, 0.2)',
             }}>
             <Typography variant="h1" color="white">
-              国立グルメブログ
+              国立グルメ
             </Typography>
           </Box>
         </Box>
