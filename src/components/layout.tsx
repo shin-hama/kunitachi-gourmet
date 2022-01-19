@@ -1,28 +1,21 @@
 import * as React from 'react'
-import { WindowLocation } from '@reach/router'
 import Container from '@mui/material/Container'
+import Stack from '@mui/material/Stack'
 
 import Header from './header'
+import Footer from './footer'
 
 type Props = {
-  location: WindowLocation
-  title?: string
   children: React.ReactElement[]
 }
-const Layout: React.FC<Props> = ({ location, title, children }) => {
+const Layout: React.FC<Props> = ({ children }) => {
   return (
     <div>
-      <header className="global-header">
+      <Stack spacing={4}>
         <Header />
-      </header>
-      <Container>
-        <main>{children}</main>
-      </Container>
-      <footer>
-        © {new Date().getFullYear()}, Built with
-        {` `}
-        <a href="https://www.gatsbyjs.com">Gatsby</a>
-      </footer>
+        <Container>{children}</Container>
+        <Footer />
+      </Stack>
     </div>
   )
 }
