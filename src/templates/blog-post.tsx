@@ -15,7 +15,6 @@ const BlogPostTemplate: React.FC<
   if (post === undefined) {
     return <></>
   }
-  console.log(post)
 
   return (
     <Layout>

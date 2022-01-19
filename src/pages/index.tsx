@@ -30,7 +30,7 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
       <Stack spacing={1}>
         {posts.map(post => {
           const title = post.title || post.slug || 'No Title'
-          console.log(post.id)
+
           return (
             <ArticleCard
               key={post.slug}

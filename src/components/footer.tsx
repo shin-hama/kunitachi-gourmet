@@ -38,9 +38,9 @@ const Footer = () => {
                 </UndecoratedLink>
               )
           )}
-          <UndecoratedLink to={form} target="_blank" rel="noopener noreferrer">
+          <a href={form} target="_blank" rel="noopener noreferrer">
             <Typography>お問い合わせ</Typography>
-          </UndecoratedLink>
+          </a>
         </Stack>
         <Typography>
           {`© ${new Date().getFullYear()}, Built with `}
