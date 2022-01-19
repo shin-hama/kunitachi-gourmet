@@ -4,6 +4,7 @@ import { graphql, Link, PageProps } from 'gatsby'
 // import Bio from "../components/bio"
 import Layout from '../components/layout'
 import Seo from '../components/seo'
+import Timestamp from '../components/molecules/Timestamp'
 
 const BlogPostTemplate: React.FC<
   PageProps<GatsbyTypes.BlogPostBySlugQuery>
@@ -23,13 +24,10 @@ const BlogPostTemplate: React.FC<
         title={post.title || ''}
         description={post.description?.description || ''}
       />
-      <article
-        className="blog-post"
-        itemScope
-        itemType="http://schema.org/Article">
+      <article itemScope itemType="http://schema.org/Article">
         <header>
           <h1 itemProp="headline">{post.title}</h1>
-          <p>{post.publishedAt}</p>
+          <Timestamp timestamp={post.publishedAt || ''} size="lg" />
         </header>
         <section
           dangerouslySetInnerHTML={{ __html: post.body || '' }}
@@ -86,7 +84,7 @@ export const pageQuery = graphql`
         raw
       }
       title
-      publishedAt(formatString: "MMMM DD, YYYY")
+      publishedAt(formatString: "YYYY-MM-DD")
       description {
         description
       }

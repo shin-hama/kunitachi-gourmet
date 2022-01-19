@@ -31,7 +31,7 @@ const ArticleCard: React.FC<Props> = ({
             )}
           </Grid>
           <Grid item xs={8}>
-            <Box marginTop={1} marginBottom={1}>
+            <Box marginTop={1} marginBottom={2}>
               <Timestamp timestamp={publishedAt} />
               <Typography variant="h4">{title}</Typography>
             </Box>
