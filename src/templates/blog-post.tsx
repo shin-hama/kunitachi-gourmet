@@ -30,7 +30,9 @@ const BlogPostTemplate: React.FC<
           <Timestamp timestamp={post.publishedAt || ''} size="lg" />
         </header>
         <section
-          dangerouslySetInnerHTML={{ __html: post.body || '' }}
+          dangerouslySetInnerHTML={{
+            __html: post.body?.childMarkdownRemark?.html || '',
+          }}
           itemProp="articleBody"
         />
         <hr />
@@ -81,7 +83,9 @@ export const pageQuery = graphql`
     contentfulPost(id: { eq: $id }) {
       id
       body {
-        raw
+        childMarkdownRemark {
+          html
+        }
       }
       title
       publishedAt(formatString: "YYYY-MM-DD")
