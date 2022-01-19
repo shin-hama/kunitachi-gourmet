@@ -9,4 +9,6 @@ import './src/style.css'
 // Highlighting for code blocks
 import 'prismjs/themes/prism.css'
 
+import '@fortawesome/fontawesome-svg-core/styles.css'
+
 export { wrapRootElement } from './src/gatsbyApis/wrapRootElement'
