@@ -19,13 +19,18 @@ const Footer = () => {
           <UndecoratedLink to="/">
             <Typography>Privacy Policy</Typography>
           </UndecoratedLink>
-          <UndecoratedLink to={form}>
+          <UndecoratedLink to={form} target="_blank" rel="noopener noreferrer">
             <Typography>お問い合わせ</Typography>
           </UndecoratedLink>
         </Stack>
         <Typography>
           {`© ${new Date().getFullYear()}, Built with `}
-          <a href="https://www.gatsbyjs.com">Gatsby</a>
+          <a
+            href="https://www.gatsbyjs.com"
+            target="_blank"
+            rel="noopener noreferrer">
+            Gatsby
+          </a>
         </Typography>
       </Stack>
     </Box>
