@@ -5,10 +5,7 @@ import Stack from '@mui/material/Stack'
 import Header from './header'
 import Footer from './footer'
 
-type Props = {
-  children: React.ReactElement[]
-}
-const Layout: React.FC<Props> = ({ children }) => {
+const Layout: React.FC = ({ children }) => {
   return (
     <div>
       <Stack spacing={4}>

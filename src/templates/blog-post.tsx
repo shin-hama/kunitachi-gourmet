@@ -10,7 +10,6 @@ const BlogPostTemplate: React.FC<
   PageProps<GatsbyTypes.BlogPostBySlugQuery>
 > = ({ data, location }) => {
   const post = data.contentfulPost
-  const siteTitle = data.site?.siteMetadata?.title || `Title`
   const { previous, next } = data
 
   if (post === undefined) {
@@ -19,7 +18,7 @@ const BlogPostTemplate: React.FC<
   console.log(post)
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout>
       <Seo
         title={post.title || ''}
         description={post.description?.description || ''}
@@ -27,7 +26,7 @@ const BlogPostTemplate: React.FC<
       <article itemScope itemType="http://schema.org/Article">
         <header>
           <h1 itemProp="headline">{post.title}</h1>
-          <Timestamp timestamp={post.publishedAt || ''} size="lg" />
+          <Timestamp timestamp={post.createdAt || ''} size="lg" />
         </header>
         <section
           dangerouslySetInnerHTML={{
@@ -88,7 +87,7 @@ export const pageQuery = graphql`
         }
       }
       title
-      publishedAt(formatString: "YYYY-MM-DD")
+      createdAt(formatString: "YYYY-MM-DD")
       description {
         description
       }

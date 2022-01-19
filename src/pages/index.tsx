@@ -3,22 +3,18 @@ import { PageProps, graphql } from 'gatsby'
 import Stack from '@mui/material/Stack'
 
 import ArticleCard from '../components/articleCard'
-// import Bio from "../components/bio"
 import Layout from '../components/layout'
 import Seo from '../components/seo'
 
 const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
   data,
-  location,
 }) => {
-  const siteTitle = data.site?.siteMetadata?.title || `Title`
   const posts = data.allContentfulPost.nodes
 
   if (posts.length === 0) {
     return (
-      <Layout location={location} title={siteTitle}>
+      <Layout>
         <Seo title="All posts" />
-        {/* <Bio /> */}
         <p>
           {
             'No blog posts found. Add markdown posts to "content/blog" (or the directory you specified for the "gatsby-source-filesystem" plugin in gatsby-config.js).'
@@ -29,9 +25,8 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
   }
 
   return (
-    <Layout location={location} title={siteTitle}>
+    <Layout>
       <Seo title="All posts" />
-      {/* <Bio /> */}
       <Stack spacing={1}>
         {posts.map(post => {
           const title = post.title || post.slug || 'No Title'
@@ -41,7 +36,7 @@ const BlogIndex: React.FC<PageProps<GatsbyTypes.BlogIndexQuery>> = ({
               key={post.slug}
               title={title}
               slug={post.slug || ''}
-              publishedAt={post.publishedAt || ''}
+              publishedAt={post.createdAt || ''}
               image={post.heroImage?.gatsbyImageData}
             />
           )
@@ -69,7 +64,7 @@ export const pageQuery = graphql`
         description {
           description
         }
-        publishedAt(formatString: "YYYY-MM-DD")
+        createdAt(formatString: "YYYY-MM-DD")
         heroImage {
           gatsbyImageData
         }
