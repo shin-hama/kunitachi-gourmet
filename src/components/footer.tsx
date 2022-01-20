@@ -26,7 +26,17 @@ const Footer = () => {
   return (
     <Box>
       <Stack>
-        <Stack direction="row" justifyContent="center" spacing={2}>
+        <Stack
+          direction="row"
+          justifyContent="center"
+          spacing={2}
+          sx={{
+            a: {
+              textDecoration: 'none',
+              color: 'inherit',
+              font: 'inherit',
+            },
+          }}>
           <UndecoratedLink to="/">
             <Typography>Home</Typography>
           </UndecoratedLink>

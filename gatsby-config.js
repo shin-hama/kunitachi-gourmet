@@ -38,15 +38,15 @@ if (!spaceId || !accessToken) {
 
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Starter Blog`,
+    title: `国立グルメ`,
     author: {
-      name: `Kyle Mathews`,
-      summary: `who lives and works in San Francisco building useful things.`,
+      name: `H&M`,
+      summary: `国立在住の食いしん坊`,
     },
-    description: `A starter blog demonstrating what Gatsby can do.`,
-    siteUrl: `https://gatsbystarterblogsource.gatsbyjs.io/`,
+    description: `国立を中心に西東京全般の美味しいものを紹介`,
+    siteUrl: `https://priceless-tesla-3e4696.netlify.app/`,
     social: {
-      twitter: `kylemathews`,
+      twitter: `coppla601`,
     },
   },
   plugins: [
