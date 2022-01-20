@@ -5,11 +5,14 @@ import { graphql, Link, PageProps } from 'gatsby'
 import Layout from '../components/layout'
 import Seo from '../components/seo'
 import Timestamp from '../components/molecules/Timestamp'
+import ShareButtons from '../components/molecules/ShareButtons'
 
 const BlogPostTemplate: React.FC<
   PageProps<GatsbyTypes.BlogPostBySlugQuery>
 > = ({ data, location }) => {
   const post = data.contentfulPost
+  const postTitle = post?.title || 'post'
+  const postUrl = data.site?.siteMetadata?.siteUrl + location.pathname
   const { previous, next } = data
 
   if (post === undefined) {
@@ -34,7 +37,10 @@ const BlogPostTemplate: React.FC<
           itemProp="articleBody"
         />
         <hr />
-        <footer>{/* <Bio /> */}</footer>
+        <footer>
+          {/* <Bio /> */}
+          <ShareButtons title={postTitle} url={postUrl} />
+        </footer>
       </article>
       <nav className="blog-post-nav">
         <ul
@@ -75,6 +81,7 @@ export const pageQuery = graphql`
   ) {
     site {
       siteMetadata {
+        siteUrl
         title
       }
     }
